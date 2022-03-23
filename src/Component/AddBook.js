@@ -43,7 +43,7 @@ export default function SignUp() {
         });
       };
 
-    const [name,setname] = useState('');
+    const [book,setbook] = useState('');
     const [description,setdescription] = useState('');
     const [quantities,setquantities] = useState('');
     const [price ,setprice] = useState('');
@@ -53,20 +53,18 @@ export default function SignUp() {
    
     
 function postData (){
-        let item = {
-            name:name,
-            description:description,
-            quantities:quantities,
-            price:price,
-            profile:profile
-            // password:password
-        }
-        console.log(item)
-        axios.post('http://localhost:8009/addbook',item)
+  let FD = new FormData();
+  FD.append('book', book);
+  FD.append('description', description);
+  FD.append('quantities', quantities);
+  FD.append('price', price);
+      FD.append('profile_file',profile[0])
+        console.log(FD)
+        axios.post('http://localhost:8009/addbook',FD)
         .then((res)=>{
             console.log('hey___sing in',res)
         })
-        history.push('/booklist')
+        history.push('/menubar')
 }
 
   return (
@@ -89,13 +87,13 @@ function postData (){
             <Grid container spacing={2}>
               <Grid item xs={12} >
                 <TextField
-                onChange={(e) => setname(e.target.value)}
+                onChange={(e) => setbook(e.target.value)}
                   autoComplete="given-name"
-                  name="name"
+                  name="book"
                   required
                   fullWidth
-                  id="name"
-                  label="Name"
+                  id="book"
+                  label="book"
                   autoFocus
                 />
               </Grid>
@@ -112,7 +110,7 @@ function postData (){
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                 onChange={(e) => setdescription(e.target.value)}
+                 onChange={(e) => setquantities(e.target.value)}
                   required
                   fullWidth
                   id="quantities"
@@ -123,7 +121,7 @@ function postData (){
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                 onChange={(e) => setdescription(e.target.value)}
+                 onChange={(e) => setprice(e.target.value)}
                   required
                   fullWidth
                   id="price"
@@ -134,7 +132,7 @@ function postData (){
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                 onChange={(e) => setdescription(e.target.files)}
+                 onChange={(e) => setprofile(e.target.files)}
                   required
                   fullWidth
                   id="profile_file"
